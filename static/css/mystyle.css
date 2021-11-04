@@ -1,0 +1,12 @@
+body {margin-top: 120px; background-color: rgb(73, 71, 71);}
+.container {
+     display: flex;
+     justify-content: center;
+ }
+ .item {
+     border-radius: .5em;
+     padding: 60px;
+     width: 30em;
+     height: 140px;
+     background-color: rgb(233, 233, 241);
+ }

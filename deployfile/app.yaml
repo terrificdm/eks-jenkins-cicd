@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: poc-app-cicd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poc-app-dep
+  namespace: poc-app-cicd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poc-app
+  template:
+    metadata:
+      labels:
+        app: poc-app
+    spec:
+      containers:
+      - name: poc-app
+        image: <REPO_NAME>/<APP_NAME>:<BUILD_TAG>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poc-app-svc
+  namespace: poc-app-cicd
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: poc-app
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: poc-app-alb-ingress
+  namespace: poc-app-cicd
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: poc-app-svc
+              port:
+                number: 80
