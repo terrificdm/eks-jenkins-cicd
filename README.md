@@ -1,1 +1,1 @@
-A simple Flask app for demo purpose
+A simple Flask app for demostrating GitHub+Jenkins+Amazon EKS CI/CD Pipeline.
