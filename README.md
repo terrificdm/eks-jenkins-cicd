@@ -52,7 +52,7 @@ kubectl get ingress -n jenkins-cicd
 ![](./images/Picture2.png)
   
 #### 3.	Jenkins Agent 节点镜像准备
-Jenkins Server节点我们会以Pod的形式部署在EKS中，同时Jenkins Server会根据CI Job的需要动态启动Jenkins Agent 节点（也是以Pod形式部署至EKS中）完成代码的编译和打包工作，所以需要预先准备好Jenkins Agent节点所需的容器镜像，本次测试中我们所使用的是一个基于Python的Flask Web应用，所以Jenkins Agent节点只需要具备基本的docker命令执行环境即可完成Flask Web App的容器镜像打包和上传镜像仓库，同时我们还会将kubectl客户端程序也打包在这个镜像中，这样就可以通过Jenkins Agent节点直接操作EKS集群。  
+Jenkins Server节点我们会以Pod的形式部署在EKS中，同时Jenkins Server会根据CI Job的需要动态启动Jenkins Agent 节点（也是以Pod形式部署至EKS中）完成代码的编译和打包工作，所以需要预先准备好Jenkins Agent节点所需的容器镜像，本次实践中我们所使用的是一个基于Python的Flask Web应用，所以Jenkins Agent节点只需要具备基本的docker命令执行环境即可完成Flask Web App的容器镜像打包和上传镜像仓库，同时我们还会将kubectl客户端程序也打包在这个镜像中，这样就可以通过Jenkins Agent节点直接操作EKS集群。  
 创建Jenkins Agent节点容器镜像的Dockerfile:
 
 ```bash
@@ -153,10 +153,10 @@ Jenkins图形界面选择Manage Jenkins -> Manage Plugins, 先升级一下当前
 ![](./images/Picture10.png)
 至此，我们就完成了Jenkins与EKS的集成配置。
 #### 7.	构建Jenkins CI/CD 流水线
-##### 测试代码、GitHub代码仓库以及ECR容器镜像仓库准备：
-在GitHub上创建本次测试所需的 “私有” 应用代码仓库（也可以根据需要创建public repo，本次测试以private repo为例），如 “poc-app-repo”，并clone至本机（请确保本机已安装好相应的git客户端程序）
+##### 验证代码、GitHub代码仓库以及ECR容器镜像仓库准备：
+在GitHub上创建本次验证所需的 “私有” 应用代码仓库（也可以根据需要创建public repo，本次验证以private repo为例），如 “poc-app-repo”，并clone至本机（请确保本机已安装好相应的git客户端程序）
 ![](./images/Picture11.png)
-因GitHub从2021-8-31起不再支持通过用户名/密码方式操作GitHub Repo，只能使用基于Token的认证方式（Token authentication requirements for Git operations | The GitHub Blog），所以本次测试我们使用基于SSH Key的方式访问GitHub。  
+因GitHub从2021-8-31起不再支持通过用户名/密码方式操作GitHub Repo，只能使用基于Token的认证方式（Token authentication requirements for Git operations | The GitHub Blog），所以本次验证我们使用基于SSH Key的方式访问GitHub。  
 本机生成用于访问GitHub的Key Pair：  
 首先在本机（Linux环境）创建一组用于访问GitHub的SSH Key Pair(私有&公钥)，命令行输入:  
 
@@ -175,7 +175,7 @@ GitHub右上角点击“settings”，选择“SSH and GPG keys”创建新的SS
 cd ..
 git clone git@github.com:terrificdm/poc-app-repo.git
 ```
-下载本次测试用例代码并推送至上一步创建好的“poc-app-repo”代码仓库
+下载本次验证用例代码并推送至上一步创建好的“poc-app-repo”代码仓库
 
 ```bash
 git clone https://github.com/terrificdm/eks-jenkins-cicd
@@ -188,7 +188,7 @@ git push
 代码成功推送完，GitHub上的“poc-app-repo”如下图所示：
 ![](./images/Picture15.png)
 创建ECR容器镜像仓库：
-AWS Console中创建本次测试的应用程序所需的容器镜像仓库 “poc-app-image”，如下图所示：
+AWS Console中创建本次验证的应用程序所需的容器镜像仓库 “poc-app-image”，如下图所示：
 ![](./images/Picture16.png)
 #### 配置Jenkins CI/CD Pipeline
 Jenkins配置GitHub访问密钥：
