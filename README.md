@@ -1,6 +1,6 @@
-> A simple Flask app for demostrating GitHub+Jenkins+Amazon EKS CI/CD Pipeline.
 ## 在 Amazon EKS 上使用 GitHub+Jenkins 构建CI/CD流水线
-
+> A simple Flask app for demostrating GitHub+Jenkins+Amazon EKS CI/CD Pipeline.
+> 
 ### 前提条件：
 安装好Amazon EKS（如版本：1.21），安装好Amazon EKS所需的AWS LoadBalancer Controller 插件
 ### 构建步骤：
