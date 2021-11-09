@@ -1,4 +1,4 @@
-A simple Flask app for demostrating GitHub+Jenkins+Amazon EKS CI/CD Pipeline.
+> A simple Flask app for demostrating GitHub+Jenkins+Amazon EKS CI/CD Pipeline.
 ## 在 Amazon EKS 上使用 GitHub+Jenkins 构建CI/CD流水线
 
 ### 前提条件：
